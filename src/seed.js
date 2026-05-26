@@ -478,28 +478,33 @@ const seedDatabase = () => {
     
     let newResidents = [...existingResidents];
     
-    mockData.forEach((residentData, index) => {
-      const username = generateUsername(residentData.firstName, residentData.lastName);
-      const password = generatePassword(residentData.birthday);
-      
-      const newResident = {
-        id: Date.now() + index,
-        first_name: residentData.firstName,
-        last_name: residentData.lastName,
-        birthday: residentData.birthday,
-        gender: residentData.gender,
-        contact_number: residentData.contactNumber,
-        email: residentData.email,
-        occupation: residentData.occupation,
-        civil_status: residentData.civilStatus,
-        zone: residentData.zone,
-        username: username,
-        password: password,
-        account_name: `${residentData.firstName} ${residentData.lastName}`,
-        account_id: Date.now() + index,
-        role: "user",
-        createdAt: new Date().toISOString()
-      };
+const convertBirthdayToISO = (birthday) => {
+    const parts = birthday.split('/')
+    return `${parts[2]}-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}`
+  }
+
+  mockData.forEach((residentData, index) => {
+    const username = generateUsername(residentData.firstName, residentData.lastName);
+    const password = generatePassword(residentData.birthday);
+    
+    const newResident = {
+      id: Date.now() + index,
+      first_name: residentData.firstName,
+      last_name: residentData.lastName,
+      birthday: convertBirthdayToISO(residentData.birthday),
+      gender: residentData.gender,
+      contact_number: residentData.contactNumber,
+      email: residentData.email,
+      occupation: residentData.occupation,
+      civil_status: residentData.civilStatus,
+      zone: `Zone ${residentData.zone}`,
+      username: username,
+      password: password,
+      account_name: `${residentData.firstName} ${residentData.lastName}`,
+      account_id: Date.now() + index,
+      role: "user",
+      createdAt: new Date().toISOString()
+    };
       
       newResidents.push(newResident);
       console.log(`Added resident: ${newResident.first_name} ${newResident.last_name} (${newResident.username})`);
@@ -520,7 +525,7 @@ const seedHouseholds = (residents) => {
   const groupedResidents = {};
   
   residents.forEach(resident => {
-    const key = `${resident.last_name}_${resident.zone}`;
+    const key = `${resident.last_name}__${resident.zone}`;
     if (!groupedResidents[key]) {
       groupedResidents[key] = [];
     }
@@ -530,7 +535,9 @@ const seedHouseholds = (residents) => {
   const newHouseholds = [];
   
   Object.keys(groupedResidents).forEach((key, index) => {
-    const [lastName, zone] = key.split('_');
+    const parts = key.split('__');
+    const lastName = parts[0];
+    const zone = parts[1] || parts[2];
     const residentsInGroup = groupedResidents[key];
     
     const householdName = `${lastName} Household`;

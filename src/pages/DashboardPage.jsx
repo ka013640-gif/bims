@@ -1,11 +1,9 @@
-import { Outlet, useLocation } from "react-router-dom"
+import { Outlet } from "react-router-dom"
 import { Sidebar } from "../components/Sidebar.jsx"
 import { Navbar } from "../components/Navbar.jsx"
 import { Toaster } from "../components/Toaster.jsx"
 
 export default function DashboardPage() {
-  const location = useLocation()
-  
   return (
     <div className="flex h-screen bg-gray-100">
       <Sidebar />
