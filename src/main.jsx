@@ -5,7 +5,6 @@ import { AppRoutes } from "./routes"
 import "./index.css"
 import seedDatabase from "./seed"
 
-// Seed the database with mock data
 seedDatabase()
 
 createRoot(document.getElementById("root")).render(

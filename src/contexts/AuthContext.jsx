@@ -41,33 +41,30 @@ export function useAuth() {
    }, [])
 
    const login = (username, password) => {
-     // Check mock admin
      if (username === MOCK_ADMIN.username && password === "admin123") {
        setUser(MOCK_ADMIN)
        localStorage.setItem("user", JSON.stringify(MOCK_ADMIN))
        return
      }
-     // Check mock user
+
      if (username === MOCK_USER.username && password === "12345678") {
        setUser(MOCK_USER)
        localStorage.setItem("user", JSON.stringify(MOCK_USER))
        return
      }
-     // Check registered users
+
      const foundUser = residents.find(u => u.username === username && u.password === password)
      if (foundUser) {
-       // Remove password from user object before storing
        const { password: _, ...userWithoutPassword } = foundUser
        setUser(userWithoutPassword)
        localStorage.setItem("user", JSON.stringify(userWithoutPassword))
        return
      }
-     // If none match, throw error (or set error state)
+
      throw new Error("Invalid credentials")
    }
 
    const register = (account_name, username, password) => {
-     // Check if username already exists (in mock or users)
      const exists = 
        [MOCK_ADMIN, MOCK_USER].some(u => u.username === username) ||
        residents.some(u => u.username === username)
@@ -75,18 +72,18 @@ export function useAuth() {
        throw new Error("Username already exists")
      }
      const newUser = {
-       account_id: Date.now(), // simple ID generation
+       account_id: Date.now(),
        account_name,
        username,
        password,
-       role: "user" // Registered users always get user role
+       role: "user"
      }
      setResidents(prev => {
        const updated = [...prev, newUser]
        localStorage.setItem("residents", JSON.stringify(updated))
        return updated
      })
-     // Auto login after registration (using newUser to avoid stale closure issue)
+
      const { password: _, ...userWithoutPassword } = newUser
      setUser(userWithoutPassword)
      localStorage.setItem("user", JSON.stringify(userWithoutPassword))
@@ -97,7 +94,6 @@ export function useAuth() {
      localStorage.removeItem("user")
    }
 
-   // Resident management functions
    const addResident = (residentData) => {
      const newResident = {
        id: Date.now(),
@@ -130,13 +126,12 @@ export function useAuth() {
      })
    }
 
-   // Household management functions
    const addHousehold = (householdData) => {
      const newHousehold = {
        id: Date.now(),
        ...householdData,
        createdAt: new Date().toISOString(),
-       residents: [] // Initialize with empty residents array
+       residents: []
      }
      setHouseholds(prev => {
        const updated = [...prev, newHousehold]
@@ -168,7 +163,6 @@ export function useAuth() {
      setHouseholds(prev => {
        const updated = prev.map(household => {
          if (household.id === householdId) {
-           // Add resident to household if not already there
            if (!household.residents.includes(residentId)) {
              return {
                ...household,
@@ -206,13 +200,13 @@ export function useAuth() {
      logout,
      loading,
      isAuthenticated: !!user,
-     // Resident management
+
      residents,
      setResidents,
      addResident,
      updateResident,
      deleteResident,
-     // Household management
+
      households,
      setHouseholds,
      addHousehold,
