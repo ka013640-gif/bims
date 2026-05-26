@@ -1,16 +1,101 @@
-# React + Vite
+# Barangay Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A web-based barangay management system for handling residents, households, and community data.
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Node.js** (v18 or higher)
+- **pnpm** (recommended package manager)
 
-## React Compiler
+## Installation
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. Clone the repository:
+```bash
+git clone https://github.com/YOUR_USERNAME/bims.git
+cd bims
+```
 
-## Expanding the ESLint configuration
+2. Install dependencies:
+```bash
+pnpm install
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Running the System
+
+### Development Server
+```bash
+pnpm dev
+```
+Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+### Build for Production
+```bash
+pnpm build
+```
+
+### Preview Production Build
+```bash
+pnpm preview
+```
+
+### Linting
+```bash
+pnpm lint
+```
+
+## Project Structure
+
+```
+src/
+├── components/     # Reusable UI components
+├── contexts/       # React context providers
+├── hooks/          # Custom React hooks
+├── lib/           # Utility functions
+├── pages/         # Application pages
+└── assets/        # Images and static files
+```
+
+## Technologies
+
+- React 19
+- Vite
+- Tailwind CSS
+- React Router DOM
+- shadcn/ui components
+
+## Features
+
+- Resident management with personal information
+- Household grouping by zone
+- User authentication (login/register)
+- Dashboard overview
+- Responsive design with Tailwind CSS
+
+## Default Accounts
+
+### Pre-configured Mock Accounts
+
+| Name | Username | Password | Role |
+|------|----------|----------|------|
+| System Administrator | admin | admin123 | admin |
+| Default Resident | resident | 12345678 | user |
+
+### Seeded Resident Accounts
+
+The system seeds mock residents on first run. Passwords are formatted as MMDDYYYY of the birthday:
+
+| Name | Username | Password |
+|------|----------|----------|
+| Carlos Bautista | carlos.bautista | 05141976 |
+| Maria Bautista | maria.bautista | 08211979 |
+| Joshua Bautista | joshua.bautista | 02172003 |
+| Roberto Dela Cruz | roberto.delacruz | 03151975 |
+| Karen Dela Cruz | karen.delacruz | 12112005 |
+| Antonio Reyes | antonio.reyes | 08011970 |
+| Mark Reyes | mark.reyes | 09142000 |
+
+## Notes
+
+- Data is stored in browser `localStorage`
+- Clear browser storage to reset the database
+- For development, the seed script runs automatically on app start
