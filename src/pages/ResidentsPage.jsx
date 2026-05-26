@@ -755,10 +755,8 @@ export default function ResidentsPage() {
                   <th className="text-left p-2">Zone</th>
                   <th className="text-left p-2">Contact</th>
                   <th className="text-left p-2">Household</th>
-                  {isAdmin && (
-                    <th className="text-left p-2">Actions</th>
-                  )}
-                </tr>
+                  <th className="text-left p-2">Actions</th>
+                 </tr>
               </thead>
               <tbody>
                 {residents.map((resident) => {
@@ -778,36 +776,38 @@ export default function ResidentsPage() {
                       <td className="p-2">{resident.zone}</td>
                       <td className="p-2">{formatContactNumber(resident.contact_number)}</td>
                       <td className="p-2">{householdName}</td>
-                      {isAdmin && (
-                        <td className="p-2 flex space-x-2">
-                          <Button 
-                            variant="outline" 
-                            size="sm"
-                            onClick={() => handleViewResident(resident)}
-                          >
-                            View
-                          </Button>
-                          <Button 
-                            variant="outline" 
-                            size="sm"
-                            onClick={() => handleEditResident(resident)}
-                          >
-                            Edit
-                          </Button>
-                          <Button 
-                            variant="destructive"
-                            size="sm"
-                            onClick={() => handleDeleteResident(resident.id)}
-                          >
-                            Delete
-                          </Button>
-                        </td>
-                      )}
+                      <td className="p-2 flex space-x-2">
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => handleViewResident(resident)}
+                        >
+                          View
+                        </Button>
+                        {isAdmin && (
+                          <>
+                            <Button 
+                              variant="outline" 
+                              size="sm"
+                              onClick={() => handleEditResident(resident)}
+                            >
+                              Edit
+                            </Button>
+                            <Button 
+                              variant="destructive" 
+                              size="sm"
+                              onClick={() => handleDeleteResident(resident.id)}
+                            >
+                              Delete
+                            </Button>
+                          </>
+                        )}
+                      </td>
                     </tr>
-                  )
-                })}
-              </tbody>
-            </table>
+                    )
+                  })}
+                </tbody>
+              </table>
           </div>
         </CardContent>
       </Card>

@@ -164,11 +164,13 @@ export default function HouseholdsPage() {
                 </CardContent>
                 <CardFooter className="flex justify-between">
                   <Button variant="outline" size="sm" onClick={() => handleView(household)}>View</Button>
-                  <div className="flex gap-2">
-                    <Button variant="outline" size="sm" onClick={() => handleEdit(household)}>Edit</Button>
-                    <Button variant="outline" size="sm" onClick={() => handleAssign(household)}>Assign</Button>
-                    <Button variant="destructive" size="sm" onClick={() => handleDelete(household.id)}>Delete</Button>
-                  </div>
+                  {isAdmin && (
+                    <div className="flex gap-2">
+                      <Button variant="outline" size="sm" onClick={() => handleEdit(household)}>Edit</Button>
+                      <Button variant="outline" size="sm" onClick={() => handleAssign(household)}>Assign</Button>
+                      <Button variant="destructive" size="sm" onClick={() => handleDelete(household.id)}>Delete</Button>
+                    </div>
+                  )}
                 </CardFooter>
               </Card>
             ))}
